@@ -5,9 +5,13 @@ var dictionary = {};
 function addValues(){
 	var llave = document.getElementById("llave").value;
 	var valor = document.getElementById("valor").value;
-	dictionary[llave] = valor;
-	printJSON();
-	printXML();
+	if(!isNaN(valor)){
+		dictionary[llave] = valor;
+		document.getElementById("Error").innerHTML="";
+		printJSON();
+	}else{
+		document.getElementById("Error").innerHTML="Error ingrese un n&uacute;mero";
+	}
 }
 
 function printJSON(){
@@ -20,7 +24,7 @@ function printJSON(){
 }
 
 function printXML(){
-	var string = '&lt;ictionary&gt;<br>'
+	var string = '&lt;dictionary&gt;<br>'
 	for(var key in dictionary){
 		string += '&nbsp;&lt;item '+key+'="'+dictionary[key]+'"&gt;<br>';
 	}
