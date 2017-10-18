@@ -8,7 +8,12 @@ function addValues(){
 	if(!isNaN(valor)){
 		dictionary[llave] = valor;
 		document.getElementById("Error").innerHTML="";
-		printJSON();
+		var radio = document.getElementById("json");
+		if(radio.checked===true){
+			printJSON();
+		}else{
+			printXML();
+		}
 	}else{
 		document.getElementById("Error").innerHTML="Error ingrese un n&uacute;mero";
 	}
