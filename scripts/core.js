@@ -6,12 +6,6 @@ function addValues(){
 	var llave = document.getElementById("llave").value;
 	var valor = document.getElementById("valor").value;
 	dictionary[llave] = valor;
-	var radio = document.getElementById("json");
-	if(radio.checked===true){
-		printJSON();
-	}else{
-		printXML();
-	}
 }
 
 function printJSON(){
