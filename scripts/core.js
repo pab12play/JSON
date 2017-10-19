@@ -5,36 +5,51 @@ var dictionary = {};
 function addValues(){
 	var llave = document.getElementById("llave").value;
 	var valor = document.getElementById("valor").value;
-	if(!isNaN(valor)){
-		dictionary[llave] = valor;
-		document.getElementById("Error").innerHTML="";
-		var radio = document.getElementById("json");
-		if(radio.checked===true){
-			printJSON();
-		}else{
-			printXML();
-		}
+	dictionary[llave] = valor;
+	var radio = document.getElementById("json");
+	if(radio.checked===true){
+		printJSON();
 	}else{
-		document.getElementById("Error").innerHTML="Error ingrese un n&uacute;mero";
+		printXML();
 	}
 }
 
 function printJSON(){
-	var string = '{<br>'
-	for(var key in dictionary){
-		string += '&nbsp;"'+key+'":"'+dictionary[key]+'"<br>';
+	var string = '{<br>"diccionario":[<br>'
+	for(var llave in dictionary){
+		var valor = dictionary[llave];
+		var tipo = "String";
+		if(!isNaN(valor)){
+			tipo = "Number";
+		}else if(valor=="true"||valor=="false"){
+			tipo = "Bool";
+		}
+		string += '{"llave":"'+llave+'",<br>"valor":"'+valor+'",<br>"tipo":"'+tipo+'"},<br>';
 	}
-	string += '}'
+	string = string.slice(0,string.length-5);
+	string += "<br>";
+	string += '   ]<br>}'
 	document.getElementById("format").innerHTML=string;
 }
 
 function printXML(){
 	var string = '&lt;dictionary&gt;<br>'
-	for(var key in dictionary){
-		string += '&nbsp;&lt;item '+key+'="'+dictionary[key]+'"&gt;<br>';
+	for(var llave in dictionary){
+		var valor = dictionary[llave];
+		var tipo = "String";
+		if(!isNaN(valor)){
+			tipo = "Number";
+		}else if(valor=="true"||valor=="false"){
+			tipo = "Bool";
+		}
+		string += '&lt;element&gt;<br>';
+		string += '&lt;llave&gt;'+llave+'&lt;/llave&gt;<br>';
+		string += '&lt;tipo&gt;'+tipo+'&lt;/tipo&gt;<br>';
+		string += '&lt;valor&gt;'+valor+'&lt;/valor&gt;<br>';
+		string += '&lt;/element&gt;<br>';
 	}
 	string += '&lt;/dictionary&gt;'
-	var display = document.getElementById("format").innerHTML=string;
+	document.getElementById("format").innerHTML=string;
 }
 
 window.onload = function(){
